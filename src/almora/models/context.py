@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from almora.core.settings import Settings
 from almora.infrastructure.filesystem import AppFileSystem, get_root_path
 from rich.console import Console
 from pathlib import Path
@@ -9,7 +8,6 @@ class SessionContext:
     def __init__(self):
         self.root_path: Path = get_root_path()
         self.app_path: AppFileSystem = AppFileSystem()
-        self.settings: Settings | None = None
         self.console: Console | None = None
         self.log = None
         self.cli_args = None
