@@ -7,9 +7,9 @@ name = "almora"
 version = "0.1.0"
 description = "CLI tools for dealing with command line scripts"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = "==3.14"
 authors = [
-    {name = "Napat Phonpattaranon", email = "09pattt@gmail.com"}
+    {name = "Napat Phonpattaranon", email = "phonpatt@icloud.com"}
 ]
 keywords = ["cli", "almora", "utility", "alias"]
 dependencies = [
@@ -20,6 +20,8 @@ dependencies = [
 dev = [
     "pytest==9.0.3",
     "pytest-cov==7.1.0",
+    "ruff==0.16.10",
+    "mypy==2.4.0",
 ]
 
 [project.urls]
@@ -27,3 +29,50 @@ Homepage = "https://github.com/09pattt/almora"
 
 [project.scripts]
 almora = "almora:start"
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+# ชุดเริ่มต้น: ตรวจความถูกต้องและความเป็นระเบียบพื้นฐาน
+select = [
+    "E", "W",   # pycodestyle (PEP 8)
+    "F",        # pyflakes (unused imports/variables)
+    "I",        # isort (การจัดเรียง imports)
+    "N",        # pep8-naming
+    "UP",       # pyupgrade (ใช้ syntax ที่ทันสมัย)
+    "B",        # flake8-bugbear (จุดที่มักเกิดบั๊ก)
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["almora"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.14"
+files = ["src/almora"]
+strict = true
+warn_unreachable = true
+show_error_codes = true
+pretty = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers --strict-config"
+
+[tool.coverage.run]
+source = ["almora"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
+# เปิด fail_under ภายหลัง เมื่อทราบ coverage จริงแล้ว
